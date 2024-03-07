@@ -13,19 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100); 
-            $table->decimal('price', 10, 2); 
-            $table->text('description'); 
+            $table->string('name', 100); // Asegúrate de ajustar la longitud máxima según tus necesidades
+            $table->decimal('price', 8, 2); // Esto permite hasta 8 dígitos en total, con 2 después del punto decimal
+            $table->text('description')->nullable();
             $table->timestamps();
-            
-
-            $table->string('name')->nullable(false)->change();
-            $table->decimal('price', 10, 2)->nullable(false)->change();
-            $table->text('description')->nullable(false)->change();
+            $table->foreignId('category_id')->constrained('categories');
         });
         
     }
-
     /**
      * Reverse the migrations.
      */

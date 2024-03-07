@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $user->password = 1243;
         $user->save();
 
+        $this->call(CategorySeeder::class);
         $this->call(ProductSeeder::class);
+
     }
 }

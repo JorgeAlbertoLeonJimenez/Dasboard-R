@@ -43,10 +43,20 @@ class OrderController extends Controller
         return $request->all();
 
     }
-    public function getOrderUser(){
-        $order = Order::where('user_id', 1)->orderBy('created_at', 'desc')->get();
-        return $order;
+    public function getOrderUser() {
+        $orders = Order::where('user_id', 1)
+                       ->orderBy('created_at', 'desc')
+                       ->get();
+    
+        $totalPrice = Order::where('user_id', 1)
+                           ->sum('price');
+    
+        return [
+            'orders' => $orders,
+            'totalPrice' => $totalPrice
+        ];
     }
+    
     
 
     /**

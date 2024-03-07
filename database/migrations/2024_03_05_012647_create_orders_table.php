@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name_product'); // Cambiado de 'name' a 'string'
             $table->integer('price'); // Cambiado de 'int' a 'integer'
             $table->integer('count')->default(1); // Cambiado de 'int' a 'integer'
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
 
-            $table->foreignId('user_id')->constrained();
+            
         });
     }
 
