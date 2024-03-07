@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use App\Http\Requests\StoreproductRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
-
+use Whoops\Run;
 
 class ProductController extends Controller
 {
@@ -27,6 +28,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
+        $product->category_id= $request->category_id;
         $product->save();
         return $product->all;
     }
@@ -35,9 +37,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreproductRequest $request)
-    {
-    }
+    public function products(Request $request)
+
+{
+    $product = product::all()->where('category_id',$request->id);
+    return $product;
+}
 
     /**
      * Display the specified resource.
@@ -69,6 +74,19 @@ class ProductController extends Controller
         $product->save();
     }
 
+    public function destroyToOrder($user_id, $id) {
+        $orderDeleted = Order::where('user_id', $user_id)
+                             ->where('id', $id)
+                             ->delete();
+        
+        if ($orderDeleted) {
+            // Realizar acciones adicionales si es necesario
+            return response()->json(['message' => 'Pedido eliminado correctamente'], 200);
+        } else {
+            return response()->json(['message' => 'Pedido no encontrado'], 404);
+        }
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
@@ -82,5 +100,7 @@ class ProductController extends Controller
         } else {
             return 'no se encontro el producto';
         }
+        
+        
     }
 }

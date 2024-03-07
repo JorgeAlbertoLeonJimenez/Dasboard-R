@@ -10,7 +10,8 @@ export default {
       colors:{
         'primary': '#EA6A12',
         'cartPrimary': '#FFF5EE',
-      }
+      },
+    
     },
   },
   plugins: [],

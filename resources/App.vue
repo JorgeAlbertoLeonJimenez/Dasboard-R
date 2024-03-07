@@ -1,28 +1,17 @@
 <template>
-  <div class="flex justify-center items-center">
-    <div class="max-w-[300px]">
-      <h4>Menu Category</h4>
-      <div class="flex max-w-screen overflow-auto gap-10">
-        <div
-          class="flex flex-col items-center justify-center text-center gap-6 bg-orange-400 rounded-3xl m-2 p-6"
-          v-for="product in products"
-          :key="product.id"
-        >
-          <div class="bg-slate-900 w-16 h-16"></div>
+  <div class=" flex flex-col justify-center items-center  gap-10 p-4 bg-orange-200 items-center">
+    <div class=" flex gap-12 h-96 w-[1500px]">
+      <div class="bg-green-500 w-[65%] overflow-hidden  mt-4 h-[300px] rounded-3xl">
+    <img src="./assets/imgs/Banner hamburguesas doble color.jpg" alt="">
+</div>
 
-          <p>{{ product.name }}</p>
-
-          <button
-            class="rounded-full bg-white text-orange-400 py-1 px-3"
-            @click="postProduct(product)"
-          >
-            <i class="fa-solid fa-greater-than"></i>
-          </button>
+        <div class="bg-blue-400 w-[30%] overflow-hidden rounded-3xl">
+           <img src="./assets/imgs/Diseño sin título.png" alt="">
         </div>
-      </div>
     </div>
-    <card-user :orderUser="orderUser"></card-user>
+    <menu-category></menu-category>
   </div>
+ 
 </template>
 
 <script>
@@ -31,50 +20,26 @@ export default {
     return {
       products: [],
       orderUser: [],
+      loader: '',
     };
   },
   methods: {
-    getProducts() {
-      this.$axios
-        .get("/api/products")
-        .then((result) => {
-          this.products = result.data;
-          console.log("productos", this.products);
-        })
-        .catch((err) => {
-          console.log("error de consulta");
-        });
-    },
-    postProduct(product) {
-      this.$axios
-        .post("/api/products/add", {
-          name_product: product.name,
-          price: product.price,
-          count: 1,
-          user_id: 1,
-        })
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((err) => {})
-        .finally(() => {
-          this.getOrderUser();
-        });
-    },
     getOrderUser() {
-      this.$axios
+
+
+        this.$axios
         .get("/api/order/user")
         .then((result) => {
           this.orderUser = result.data;
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          this.loader = true;
+        });
     },
   },
-
   mounted() {
-    this.getProducts();
     this.getOrderUser();
   },
 };
 </script>
-
