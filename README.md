@@ -40,7 +40,9 @@ Install dependencies
 ```bash
   php artisan db:seed
 ```
-
+```bash
+  composer install
+```
 
 
 Start the server
